@@ -19,7 +19,7 @@ chk_tubes() {
       if ! ping -c 1 yahoo.com > /dev/null 2>&1  ; then
          if ! ping -c 1 bing.com > /dev/null 2>&1 ; then
              clear
-             printf "\n\nDo you have an internet connection???\n\n"
+             printf "\n\ndo you have an internet connection???\n\n"
              exit
          fi
       fi
@@ -43,55 +43,41 @@ test_bin() {
    fi
 }
 
-get_permission() {
-
-while true; do
-     printf "\n"
-       read ansr
-       case $ansr in
-      [Yy] ) break;;
-      [Nn] ) break;;
-         * ) printf "\nNot a valid entry \nPlease answer y or n";;
-    esac
- done
-
-printf "Continuing...\n"
-
-}
-
 
 
 if [ ! -e /var/log/mmc-int ]; then
 
-printf "\nIt seems that you have not run minimodem-chat before"
-printf "\nwould you like to check if you missing any dependancies?"
-printf "\nnote pulseaudio will not be installed by these checks"
-printf "\nas it is installed by default on most Ubuntu based distros"
-printf "\n(y/n)?\n"
-get_permission
-  chk_usr root
-  chk_tubes
+  printf "\nIt seems that you have not run minimodem-chat before"
+  printf "\nwould you like to check if you missing any dependancies?"
+  printf "\nnote pulseaudio will not be installed by these checks"
+  printf "\nas it is installed by default on most Ubuntu based distros"
+  printf "\n(y/n)?\n"
   while true; do
+      printf "\n"
+      read ansr
       case $ansr in
           [nN] ) break ;;
-          [Yy] ) printf "\nchecking....\n" :
+          [Yy] ) printf "\nchecking...." :
+                 chk_usr root
+                 chk_tubes
                  while true; do
                        if ! ( test_bin tee && test_bin screen && test_bin minimodem && test_bin openssl ); then
-                            printf "\nNot found on apt-cache, updating apt\n"
+                            printf "\nnot found on apt-cache, updating apt\n"
                             apt-get update
                        else
-                            printf "\nIt seems you are good to go.\n"
+                            printf "\nit seems you are good to go.\n\n"
                             sleep 2
                             break
                        fi
-                   done
-                   break
-		   ;;
-             * ) printf "\nvariable went insane\n" ;;
+                 done
+                 date > /var/log/mmc-int
+                 printf "minimodem-chat by xor-function\n\n" >> /var/log/mmc-int
+                 printf "\nchecks done run again as a regular user.\n"
+                 exit
+                 ;;
+             * ) printf "\nNot a valid entry \nPlease answer y or n";;
        esac
   done
-  date > /var/log/mmc-int
-  printf "minimodem-chat by xor-function\n\n" >> /var/log/mmc-int
 fi
 
 screen -c comm-config
