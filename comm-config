@@ -1,0 +1,5 @@
+screen ./mmc-tx.sh # Open first screen and launch first script
+split # -v        #  Make second split
+focus             #  Switch to second split
+screen ./mmc-rx.sh # Open second screen and launch second script
+focus
