@@ -7,7 +7,7 @@
 
 while true; do
 printf "*************************************"
-printf "\nUsing screen so use it's \nhot keys for navigation\n\n"
+printf "\nlistening for data.\n"
 printf "*************************************\n\n"
 sleep 1
 minimodem -q --rx -8 30 | tee -a tmp/rx-log
