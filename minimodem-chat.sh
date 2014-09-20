@@ -9,7 +9,7 @@
 chk_usr() {
    if [ "$(whoami)" != "$1" ]; then
        printf "\nyou need to be root, try sudo\nexiting....\n\n"
-       exit
+       exit 1
    fi
 }
 
@@ -20,7 +20,7 @@ chk_tubes() {
          if ! ping -c 1 bing.com > /dev/null 2>&1 ; then
              clear
              printf "\n\ndo you have an internet connection???\n\n"
-             exit
+             exit 1
          fi
       fi
   fi
@@ -32,7 +32,7 @@ get_aptpkg() {
    printf "\nfetching $1 from apt\n"
    if ! apt-get -y install $1; then
        printf "\n\nAPT failed to install "$1", are your repos working?\nexiting...\n\n"
-       exit
+       exit 1
    fi
 }
 
@@ -60,16 +60,15 @@ if [ ! -e /var/log/mmc-int ]; then
           [Yy] ) printf "\nchecking...." :
                  chk_usr root
                  chk_tubes
-                 while true; do
-                       if ! ( test_bin tee && test_bin screen && test_bin minimodem && test_bin openssl ); then
-                            printf "\nnot found on apt-cache, updating apt\n"
-                            apt-get update
-                       else
-                            printf "\nit seems you are good to go.\n\n"
-                            sleep 2
-                            break
-                       fi
-                 done
+                 apt-get update
+                   if ! ( test_bin tee && test_bin screen && test_bin minimodem && test_bin openssl ); then
+                           printf "\nAPT failed, are your mirrors blocked?\nexiting..."
+                           exit 1
+                     else
+                           printf "\nit seems you are good to go.\n\n"
+                           sleep 2
+                           break
+                   fi
                  date > /var/log/mmc-int
                  printf "minimodem-chat by xor-function\n\n" >> /var/log/mmc-int
                  printf "\nchecks done run again as a regular user.\n"
