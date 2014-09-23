@@ -61,17 +61,14 @@ if [ ! -e /var/log/mmc-int ]; then
                  chk_usr root
                  chk_tubes
                  apt-get update
-                   if ! ( test_bin tee && test_bin screen && test_bin minimodem && test_bin openssl ); then
-                           printf "\nAPT failed, are your mirrors blocked?\nexiting..."
-                           exit 1
-                     else
-                           printf "\nit seems you are good to go.\n\n"
-                           sleep 2
-                           break
-                   fi
+                 test_bin tee
+                 test_bin screen
+                 test_bin minimodem
+                 test_bin openssl
+                 printf "\nit seems you are good to go.\n\n"
                  date > /var/log/mmc-int
                  printf "minimodem-chat by xor-function\n\n" >> /var/log/mmc-int
-                 printf "\nchecks done run again as a regular user.\n"
+                 printf "\nchecks are done run again as a regular user.\n"
                  exit
                  ;;
              * ) printf "\nNot a valid entry \nPlease answer y or n";;
@@ -85,5 +82,4 @@ if [ ! $? -eq 0 ]; then
 fi
 
 exit
-
 
