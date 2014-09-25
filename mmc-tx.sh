@@ -30,7 +30,7 @@ source $cfgpath/chat.conf
 
 printf "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n"
 printf "\n     Minimodem Chat"
-printf "\n     by xor-function"
+printf "\n"
 printf "\n\n To configure encryption\n edit mm-tx.sh\n"
 printf "\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n"
 while true
