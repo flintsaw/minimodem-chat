@@ -22,6 +22,7 @@
  prompt after the checks are made once on your system.
  to view it again delete /var/log/mmc-int
 
+ Working on Ubuntu 12.04 LTS
 
 ## comm-config
  This file sets up screen to provided the interactive 
