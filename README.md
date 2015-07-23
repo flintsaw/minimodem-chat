@@ -16,8 +16,8 @@
  folder called mmc-tmp in the running directory to help 
  ease cleanup.
 
-## Dependancies
- The dependancies will be checked if you select to when 
+## Dependencies
+ The dependencies will be checked if you select to when 
  prompted, after which you will not be bothered by the
  prompt after the checks are made once on your system.
  to view it again delete /var/log/mmc-int
