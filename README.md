@@ -56,7 +56,7 @@
 ## IMPORTANT
 
  Asymmetric encryption is done with s/mime set. Be sure when creating  
- a encrypted file by pasting data to a file it's name corrisponds to the 
+ a encrypted file by pasting data to a file it's name corresponds to the 
  encryption method used. 
 
     test.enc for symmetric crypto
