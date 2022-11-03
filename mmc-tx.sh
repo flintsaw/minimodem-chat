@@ -22,7 +22,7 @@ trap wrap_up INT TERM
 
 cfgpath="$( cd "$(dirname "$0")" ; pwd -P )"
 if [[ ! -e $cfgpath/chat.conf ]]; then
-     printf "the chat.conf file was not detected on $(tstamp), exiting..."
+     printf "The chat.conf file was not detected on $(tstamp), exiting..."
      exit
 fi
 
@@ -31,7 +31,7 @@ source $cfgpath/chat.conf
 printf "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n"
 printf "\n     Minimodem Chat"
 printf "\n"
-printf "\n\n To configure encryption\n edit mm-tx.sh\n"
+printf "\n\n To configure encryption\n edit chat.conf\n"
 printf "\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n"
 while true
 do
@@ -49,45 +49,23 @@ do
     printf "*****************************************"
     printf "\nType message then press enter TWICE. To quit hit ctrl-c\n"
     printf "*****************************************"
-    while true; do
-      case $encrypt in
-          [oO][Ff][Ff] ) printf "\nENCRYPTION IS OFF\n"; break ;;
-          [sS][yY][mM] ) printf "\nSet to symmetric encryption\n" ; break ;;
-          [kK][Ee][yY] ) printf "\nSet to public key encryption\n" ; break ;;
-                     * ) printf "\nEncryption variable options not set correctly \n\nENCRYPTION IS OFF!\n" :
-                           unset encrypt
-                           encrypt=off
-                           break
-                           ;;
-      esac
     done
     printf "========================================="
     printf "\nInput message:\n\n"
     rfmsg=$(sed '/^$/q')
-    printf "\ntransmitting msg...\n"
+    printf "\nTransmitting msg...\n"
     cat > tmp/tx-log <<- EOL
 
 	$(tstamp)
 	$rfmsg
 
-	EOL
-    if [ $encrypt == "off" ]; then
-       cat tmp/tx-log | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
-       cat tmp/tx-log >> tmp/tx-main-log
-    fi
-
-    if [ $encrypt == "sym" ]; then
        ccrypt -e tmp/tx-log -K $pass
-       echo "BOF BOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
        cat tmp/tx-log.enc | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
-       echo "EOF EOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
+
        clear
        printf "\n---------\n" >> tmp/tx-main-log
        cat tmp/tx-log.enc >> tmp/tx-main-log
        printf "\n---------\n\n" >> tmp/tx-main-log
-       rm tmp/tx-log.enc
-    fi
-    
+       rm tmp/tx-log.enc    
 done
-
 exit
