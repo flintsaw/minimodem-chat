@@ -47,7 +47,7 @@ do
     fi
     cat tmp/tx-main-log
     printf "*****************************************"
-    printf "\nto send msg, enter in a blank line \nthen press enter, to quit hit ctrl-c\n"
+    printf "\nType message then press enter TWICE. To quit hit ctrl-c\n"
     printf "*****************************************"
     while true; do
       case $encrypt in
@@ -78,28 +78,16 @@ do
 
     if [ $encrypt == "sym" ]; then
        openssl aes-256-cbc -a -salt -in tmp/tx-log -out tmp/tx-log.enc -pass pass:$pass
-       echo "BOF BOF" | minimodem --tx -8 30
-       cat tmp/tx-log.enc | minimodem --tx -8 30
-       echo "EOF EOF" | minimodem --tx -8 30
+       echo "BOF BOF" | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
+       cat tmp/tx-log.enc | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
+       echo "EOF EOF" | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
        clear
        printf "\n---------\n" >> tmp/tx-main-log
        cat tmp/tx-log.enc >> tmp/tx-main-log
        printf "\n---------\n\n" >> tmp/tx-main-log
        rm tmp/tx-log.enc
     fi
-
-    if [ $encrypt == "key" ]; then
-       openssl smime -encrypt -aes256 -in tmp/tx-log -out tmp/tx-log.eml $pass
-       echo "BOF BOF" | minimodem --tx -8 30
-       cat tmp/tx-log.eml | minimodem --tx -8 30
-       echo "EOF EOF" | minimodem --tx -8 30
-       clear
-       printf "\n---------\n" >> tmp/tx-main-log
-       cat tmp/tx-log.eml >> tmp/tx-main-log
-       printf "\n---------\n\n" >> tmp/tx-main-log
-       rm tmp/tx-log.eml
-    fi
-
+    
 done
 
 exit
