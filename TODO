@@ -1,0 +1,5 @@
+Sudo first run of minimodem-chat.sh. Crashes on Pepermint unless run as root.
+Done - Script to install ccrpyt
+Done - Add encryption to rx
+Done - Swap openssl for ccrypt
+Fix everything so it works
