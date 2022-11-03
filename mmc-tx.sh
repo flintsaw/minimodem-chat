@@ -2,7 +2,7 @@
 #
 # Simple bash program to create a basic
 # chat interface for use with minimodem
-# transmission
+# transmission. Forked from eyedeekay.
 #---------------------------------------------------------------------
 
 
@@ -72,15 +72,15 @@ do
 
 	EOL
     if [ $encrypt == "off" ]; then
-       cat tmp/tx-log | minimodem --tx -8 30
+       cat tmp/tx-log | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
        cat tmp/tx-log >> tmp/tx-main-log
     fi
 
     if [ $encrypt == "sym" ]; then
        openssl aes-256-cbc -a -salt -in tmp/tx-log -out tmp/tx-log.enc -pass pass:$pass
-       echo "BOF BOF" | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
-       cat tmp/tx-log.enc | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
-       echo "EOF EOF" | minimodem --tx 30 -M $mark -S $space --alsa=$card --float-samples
+       echo "BOF BOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
+       cat tmp/tx-log.enc | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
+       echo "EOF EOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
        clear
        printf "\n---------\n" >> tmp/tx-main-log
        cat tmp/tx-log.enc >> tmp/tx-main-log
