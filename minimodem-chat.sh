@@ -15,9 +15,9 @@ chk_usr() {
 
 chk_tubes() {
   printf "\nChecking your tubes..."
-  if ! ping -c 1 google.com > /dev/null 2>&1  ; then
-      if ! ping -c 1 yahoo.com > /dev/null 2>&1  ; then
-         if ! ping -c 1 bing.com > /dev/null 2>&1 ; then
+  if ! ping -c 1 duck.com > /dev/null 2>&1  ; then
+      if ! ping -c 1 eff.org > /dev/null 2>&1  ; then
+         if ! ping -c 1 knowyourmeme.com > /dev/null 2>&1 ; then
              clear
              printf "\n\ndo you have an internet connection???\n\n"
              exit 1
