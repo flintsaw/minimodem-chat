@@ -37,19 +37,6 @@
  card
 ```
  
-## DECRYPTION
-
- OpenSSL symmetric encryption: 
- You must know the encryption type as it's an option that needs to be set
-```
- openssl enc -aes-256-cbc -d -a -in test.enc -out test
-``` 
-
- OpenSSL asymmetric encryption (public key):
-```
- openssl smime -decrypt -in test.eml -inkey privatekey.pem -out test
-```
- 
  enjoy...
  
  nightowlconsulting.com
