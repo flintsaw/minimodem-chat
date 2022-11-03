@@ -10,6 +10,6 @@ printf "*************************************"
 printf "\nlistening for data.\n"
 printf "*************************************\n\n"
 sleep 1
-minimodem -q --rx -8 30 | tee -a tmp/rx-log
+minimodem -q --rx 30 -M $mark -S $space -c 2 --alsa=plughw:$card | tee -a tmp/rx-log
 done
 exit
