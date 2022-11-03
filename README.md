@@ -2,7 +2,7 @@
 
  A simple chat program written as a bash script to make easy, 
  interactive use of minimodem along with providing
- encryption using OpenSSL.
+ encryption using ccrypt.
 
  This script requires a compatible audio software package.
  Pulseaudio is recommended.
@@ -30,7 +30,6 @@
  The options avalaible to set in chat.conf are.
 
 ```
- encrypt
  pass
  mark
  space
