@@ -77,7 +77,7 @@ do
     fi
 
     if [ $encrypt == "sym" ]; then
-       openssl aes-256-cbc -a -salt -in tmp/tx-log -out tmp/tx-log.enc -pass pass:$pass
+       ccrypt -e tmp/tx-log -K $pass
        echo "BOF BOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
        cat tmp/tx-log.enc | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
        echo "EOF EOF" | minimodem --tx 30 -M $mark -S $space --alsa=plughw:$card --float-samples
